@@ -1,0 +1,12 @@
+<no_of_states> <no_of_transitions>
+<initial_state_1> <next_state_1> <input_symbol_1> <output_symbol_1>
+<initial_state_2> <next_state_2> <input_symbol_2> <output_symbol_2>
+...
+<initial_state_no_of_states> <next_state_no_of_states> <input_symbol_no_of_states> <output_symbol_no_of_states>
+<initial_state>
+<final_state_1> <final_state_2> ... <final_state_n>
+<no_of_words>
+<word_1>
+<word_2>
+...
+<word_no_of_words>
