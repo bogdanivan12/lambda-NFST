@@ -1,14 +1,16 @@
 """Main module for lambda_NFST project"""
 from typing import List
+from typing import Tuple
 
 
-def read(input_file_path: str):
+def read_input(input_file_path: str) -> List[str]:
     """Reads the input file and returns the contents as a list of strings"""
     with open(input_file_path, "r") as file:
         return file.readlines()
 
 
-def transform_input_into_nfst(input_data: list):
+def transform_input_into_nfst(
+        input_data: list) -> Tuple[int, int, dict, str, List[str]]:
     """Transforms the input data into a NFST"""
     adjacency_list = {}
     no_of_states, no_of_transitions = [int(x) for x in input_data[0].split()]
@@ -33,7 +35,8 @@ def transform_input_into_nfst(input_data: list):
     )
 
 
-def get_words_from_input(input_data: list, no_of_transitions: int):
+def get_words_from_input(input_data: list,
+                         no_of_transitions: int) -> Tuple[int, List[str]]:
     """Returns the words to be translated from the input data"""
     no_of_words = int(input_data[no_of_transitions + 3])
     words_list = [
@@ -44,7 +47,7 @@ def get_words_from_input(input_data: list, no_of_transitions: int):
 
 
 def dfs(adjacency_list: dict, final_states: List[str], word: str, state: str,
-        translated_word: str=""):
+        translated_word: str="") -> None:
     """Performs a depth-first search on the NFST"""
     if not word:
         if state in final_states:
@@ -65,12 +68,12 @@ def dfs(adjacency_list: dict, final_states: List[str], word: str, state: str,
                 )
 
 
-def main():
+def main() -> None:
     """
         Main function that reads the NFST from the input file and the given
         words and translates them based on the rules of the NFST
     """
-    input_data = read("../input/input.txt")
+    input_data = read_input("../input/input.txt")
     (
         no_of_states,
         no_of_transitions,
