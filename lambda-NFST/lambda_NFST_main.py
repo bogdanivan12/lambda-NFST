@@ -47,14 +47,20 @@ def get_words_from_input(input_data: list,
 
 
 def dfs(adjacency_list: dict, final_states: List[str], word: str, state: str,
-        translated_word: str="") -> None:
-    """Performs a depth-first search on the NFST"""
+        translated_word: str="", lambda_visited: set=None) -> None:
+    """Performs a depth-first search on the NFST and avoids lambda cycles"""
+    if lambda_visited is None:
+        lambda_visited = set()
     if not word:
         if state in final_states:
             print(translated_word)
         return
     for neighbour in adjacency_list[state]:
         for transition in adjacency_list[state][neighbour]:
+            if transition[0] == "#":
+                if state in lambda_visited:
+                    continue
+                lambda_visited.add(state)
             if transition[0] == word[0] or transition[0] == "#":
                 dfs(
                     adjacency_list=adjacency_list,
@@ -64,7 +70,8 @@ def dfs(adjacency_list: dict, final_states: List[str], word: str, state: str,
                     translated_word=(
                         f"{translated_word}"
                         f"{transition[1] if transition[1] != '#' else ''}"
-                    )
+                    ),
+                    lambda_visited=lambda_visited.copy()
                 )
 
 
@@ -86,7 +93,7 @@ def main() -> None:
         no_of_transitions=no_of_transitions
     )
     for word in words_list:
-        print(f"{word} -> ", end="")
+        print(f"=== {word} ===")
         dfs(
             adjacency_list=adjacency_list,
             final_states=final_states,
